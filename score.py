@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun May 12 18:32:01 2024
+Created on Mon May 13 12:22:58 2024
 
 @author: aliciamartilopez
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue May  7 17:36:35 2024
-
-@author: aliciamartilopez
-"""
-from items import Item, Movie, Book
+from item import Item, Movie, Book
 from user import User
 import numpy as np
 from typing import List
@@ -36,7 +29,7 @@ class Score:
             next(f) 
             if opcio == 2:
                 for line in f:
-                    if len(self._ll_items) < 100000:
+                    if len(self._ll_items) < 10000:
                         id_usuari, id_item, _ = line.strip().split(',')
                         self._ll_usuaris.add(id_usuari)
                         self._ll_items.add(id_item)
@@ -56,11 +49,13 @@ class Score:
         with open(fitxer_valoracions, 'r') as f:
             next(f) 
             if opcio == 2:
+                i = 0
                 for line in f:
-                    if len(self._ll_items) < 100000:
+                    if i < 10000:
                         id_usuari, id_item, score = line.strip().split(',')
                         score = float(score)
                         self._mat[self._ll_usuaris.index(id_usuari), self._ll_items.index(id_item)] = score
+                        i += 1
                     else:
                         break
             else:
@@ -75,8 +70,6 @@ class Score:
             if np.count_nonzero(self._mat[:,index]) >= min_vots:
                 ll.append(id_item)
         return ll
-    def hola():
-        return 'hola'
     
     
     def avg_item(self, id_item) -> float:
@@ -109,11 +102,15 @@ class Score:
             return True
         else:
             return False
+    
+    
+    
+    #def mat_rec_simple(self):
         
     #def __str__(self):
      #   return str(self._mat)
 
-S = Score('llibres/Ratings.csv',2)
+#S = Score('llibres/Ratings.csv',2)
 
 
 """

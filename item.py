@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 22 09:47:19 2024
+Created on Mon May 13 12:24:12 2024
 
 @author: aliciamartilopez
 """
@@ -12,29 +12,31 @@ from abc import ABCMeta, abstractmethod
 class Item(metaclass=ABCMeta):
 
     _titol: str
-    _valoracions: dict = {}
+    #_valoracions: dict = {}
     _ID: str
 
 
     def __init__(self, ID = 0, nomFitxerValoracions = "", nomFitxerTitols = ""):
-
+        self._titol = ""
         self._ID = ID
-        self._valoracions = {}
-        with open(nomFitxerValoracions, 'r') as f:
-            for line in f:
-                line = line.split(',')
-                if line[1] == self._ID:
-                    self._valoracions[line[0]] = line[2]
         with open(nomFitxerTitols, 'r') as f:
             for line in f:
                 line = line.split(',')
+                #rata = line[0]
+                #while rata[0] == '0':
+                 #   rata = rata[1:]
                 if line[0] == self._ID:
                     self._titol = line[1]
     
     def __str__(self):
-        resposta = ''
-        resposta += 'TITOL: '+self._titol+'\n'
-        return resposta
+        
+        if self._titol:
+            resposta = ''
+            resposta += 'TITOL: '+self._titol+'\n'
+            return resposta
+        else: 
+            return None
+        
 
 
 class Book(Item):
@@ -52,9 +54,12 @@ class Book(Item):
                     self._autor = line[2]
     
     def __str__(self):
-        resposta = super().__str__()
-        resposta += 'AUTOR: '+self._autor+'\n'
-        return resposta
+        if self._titol:
+            resposta = super().__str__()
+            resposta += 'AUTOR: '+self._autor+'\n'
+            return resposta
+        else:
+            return None
 
 class Movie(Item):
     _generes: list = []
@@ -67,9 +72,12 @@ class Movie(Item):
                 if line[0] == self._ID:
                     self._generes = line[2][:-1].split('|')
     def __str__(self):
-        resposta = super().__str__()
-        resposta += 'GENERES: '+str(self._generes)
-        return resposta
+        if self._titol:
+            resposta = super().__str__()
+            resposta += 'GENERES: '+str(self._generes)
+            return resposta
+        else:
+            return None
 
 """
 nomFitxerValoracions = 'movies/ratings.csv'
