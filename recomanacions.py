@@ -38,3 +38,6 @@ class Recomanacio():
             copia_puntuacions.remove(maxim)
             
         return items
+    
+    #def recomanacio_colaborativa(self):
+        #return items=[]
