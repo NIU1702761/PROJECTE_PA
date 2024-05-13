@@ -75,6 +75,8 @@ class Score:
             if np.count_nonzero(self._mat[:,index]) >= min_vots:
                 ll.append(id_item)
         return ll
+    def hola():
+        return 'hola'
     
     
     def avg_item(self, id_item) -> float:
