@@ -29,7 +29,7 @@ class Score:
             next(f) 
             if opcio == 2:
                 for line in f:
-                    if len(self._ll_items) < 10000:
+                    if len(self._ll_items) < 50000:
                         id_usuari, id_item, _ = line.strip().split(',')
                         self._ll_usuaris.add(id_usuari)
                         self._ll_items.add(id_item)
@@ -51,7 +51,7 @@ class Score:
             if opcio == 2:
                 i = 0
                 for line in f:
-                    if i < 10000:
+                    if i < 50000:
                         id_usuari, id_item, score = line.strip().split(',')
                         score = float(score)
                         self._mat[self._ll_usuaris.index(id_usuari), self._ll_items.index(id_item)] = score

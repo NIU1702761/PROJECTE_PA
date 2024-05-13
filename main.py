@@ -19,39 +19,52 @@ class Main2():
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
         fitxer_valoracions_prova = 'prova3.csv'
         #o = 2
-        o = int(input('\nAmb quin conjunt de dades vols treballar?\n1 - pelicules\n2 - llibres\n3 - prova\n'))
+        o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
+        while (o != 1) and (o != 2):
+            print('Opció invalida.')
+            o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
+        print('Carregant conjunt de dades...')
         if o == 1:
             self._score = Score(fitxer_valoracions_pelis,o)
-        elif o == 2:
-            self._score = Score(fitxer_valoracions_llibres,o)
         else:
-            self._score = Score(fitxer_valoracions_prova,o)
+            self._score = Score(fitxer_valoracions_llibres,o)
         #metode = 1
-        metode = int(input('\nQuin mètode de recomanació vosl fer servir?\n1 - recomanacio_simple\n2 - recomanació_colaborativa\n'))
-        if metode == 1:
-            id_user = input("Identificado d'usuari: ")
-            #id_user = '276725'
-            #276746
-            while id_user != '':
-                R = Recomanacio(self._score, id_user)
+        print('Fet!')
+        self.crida_metode(o)
+
+    def crida_metode(self,o):
+        fitxer_valoracions_pelis = 'movies/ratings.csv'
+        fitxer_valoracions_llibres = 'llibres/Ratings.csv'
+
+        metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
+        while (metode != 1) and (metode != 2):
+            print('Opció invàlida.')
+            metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
+        id_user = input("\nIdentificador d'usuari: ")
+        #id_user = '276725'
+        #276746
+        while id_user != '':
+            R = Recomanacio(self._score, id_user)
+            if metode == 1:
                 items = R.recomanacio_simple()
-                for item in items:
-                    if o == 2:
-                        H = Book(item,fitxer_valoracions_llibres,'llibres/Books.csv')
-                        #print('\n'+str(Book(item,fitxer_valoracions_llibres,'llibres/Books.csv')))
-                        if H:
-                            print('\n'+str(H))
-                        else:
-                            print('Llibre no carregat')
+            else:
+                items = R.recomanacio_colaborativa()
+            
+            for item in items:
+                if o == 2:
+                    H = Book(item,fitxer_valoracions_llibres,'llibres/Books.csv')
+                    if H:
+                        print('\n'+str(H))
                     else:
-                        H = Movie(item,fitxer_valoracions_pelis,'movies/movies.csv')
-                        #print('\n'+str(Movie(item,fitxer_valoracions_pelis,'movies/movies.csv')))
-                        if H:
-                            print('\n'+str(H))
-                        else:
-                            print('Película no carregada')
-                id_user = input("Identificado d'usuari: ")
-    
+                        print('Llibre no carregat')
+                else:
+                    H = Movie(item,fitxer_valoracions_pelis, 'movies/movies.csv')
+                    if H:
+                        print('\n'+str(H))
+                    else:
+                        print('Película no carregada')
+            id_user = input("Identificado d'usuari: ")
+
     #def recomanacio_colaborativa(self, id_user):
             
         
