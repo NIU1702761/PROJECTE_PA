@@ -10,7 +10,7 @@ from score import Score
 from item import Item, Book, Movie
 from user import User
 import numpy as np
-
+from recomanacions import Recomanacio
 
 class Main2():
 
@@ -33,7 +33,8 @@ class Main2():
             #id_user = '276725'
             #276746
             while id_user != '':
-                items = self.recomanacio_simple(id_user)
+                R = Recomanacio(self._score, id_user)
+                items = R.recomanacio_simple()
                 for item in items:
                     if o == 2:
                         H = Book(item,fitxer_valoracions_llibres,'llibres/Books.csv')
@@ -50,33 +51,6 @@ class Main2():
                         else:
                             print('Película no carregada')
                 id_user = input("Identificado d'usuari: ")
-    
-    def recomanacio_simple(self,id_user):
-        #num_recomanacions = 1
-        num_recomanacions = int(input("Numero de recomenacions: "))
-        #min_vots = 1
-        min_vots = int(input('Minim vots: '))
-        items_a_considerar = self._score.min_vots(min_vots)
-        
-        puntuacions = []
-        avg_global = self._score.avg_global(items_a_considerar)
-        
-        for id_item in items_a_considerar:
-            num_vots = self._score.num_vots(id_item)
-            avg_item = self._score.avg_item(id_item)
-            puntuacio = ((num_vots/(num_vots+min_vots))*avg_item)+((min_vots/(num_vots+min_vots))*avg_global)
-            puntuacions.append(puntuacio)
-        
-        items = []
-        copia_puntuacions = puntuacions.copy()
-        while len(items) < num_recomanacions:
-            maxim = max(copia_puntuacions)
-            id_item = items_a_considerar[puntuacions.index(maxim)]
-            if self._score.no_vista(id_user, id_item):
-                items.append(id_item)
-            copia_puntuacions.remove(maxim)
-            
-        return items
     
     #def recomanacio_colaborativa(self, id_user):
             
