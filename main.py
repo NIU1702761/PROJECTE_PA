@@ -39,7 +39,7 @@ class Main2():
         metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
         while (metode != 1) and (metode != 2):
             print('Opció invàlida.')
-            metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
+            metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n    3 - recomanació_basada_en_contingut\n --> '))
         id_user = input("\nIdentificador d'usuari: ")
         #id_user = '276725'
         #276746
@@ -47,8 +47,10 @@ class Main2():
             R = Recomanacio(self._score, id_user)
             if metode == 1:
                 items = R.recomanacio_simple()
-            else:
+            elif metode == 2:
                 items = R.recomanacio_colaborativa()
+            else:
+                items = R.recomanacio_basada_en_contingut()
             
             for item in items:
                 if o == 2:
@@ -65,7 +67,7 @@ class Main2():
                         print('Película no carregada')
             id_user = input("Identificado d'usuari: ")
 
-    #def recomanacio_colaborativa(self, id_user):
+    
             
         
     

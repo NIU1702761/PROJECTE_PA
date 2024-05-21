@@ -41,3 +41,5 @@ class Recomanacio():
     
     #def recomanacio_colaborativa(self):
         #return items=[]
+    
+    def recomanacio_basada_en_contingut(self):
