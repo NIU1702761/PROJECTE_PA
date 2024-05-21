@@ -17,7 +17,8 @@ class Main2():
     def __init__(self):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
-        fitxer_valoracions_prova = 'prova3.csv'
+        #fitxer_valoracions_prova = 'prova3.csv'
+        fitxer_generes_pelis = 'movies/movies.csv'
         #o = 2
         o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
         while (o != 1) and (o != 2):
@@ -35,9 +36,10 @@ class Main2():
     def crida_metode(self,o):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
+        fitxer_generes_pelis = 'movies/movies.csv'
 
-        metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
-        while (metode != 1) and (metode != 2):
+        metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n    3 - recomanació_basada_en_contingut\n --> '))
+        while (metode != 1) and (metode != 2) and (metode != 3):
             print('Opció invàlida.')
             metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n    3 - recomanació_basada_en_contingut\n --> '))
         id_user = input("\nIdentificador d'usuari: ")
@@ -50,7 +52,7 @@ class Main2():
             elif metode == 2:
                 items = R.recomanacio_colaborativa()
             else:
-                items = R.recomanacio_basada_en_contingut()
+                items = R.recomanacio_basada_en_contingut(fitxer_generes_pelis)
             
             for item in items:
                 if o == 2:

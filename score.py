@@ -103,6 +103,9 @@ class Score:
         else:
             return False
     
+    def vector_puntuacions(self, id_user):
+        return self._mat[self._ll_usuaris.index(id_user),:]
+    
     
     
     #def mat_rec_simple(self):
