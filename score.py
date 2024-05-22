@@ -20,31 +20,46 @@ class Score:
     _n_usuaris = int 
     _n_items = int
     
-    def __init__(self, fitxer_valoracions,opcio):
+    def __init__(self, fitxer_items,fitxer_valoracions,opcio):
         self._ll_usuaris = set()
         self._ll_items = set()
         self._mat = None
 
-        with open(fitxer_valoracions, 'r') as f:
-            next(f) 
-            if opcio == 2:
+        if opcio==1:
+            with open(fitxer_valoracions, 'r') as f:
+                next(f) 
                 for line in f:
                     if len(self._ll_items) < 50000:
-                        id_usuari, id_item, _ = line.strip().split(',')
+                        id_usuari, id_item, _ , _ = line.strip().split(',')
                         self._ll_usuaris.add(id_usuari)
                         self._ll_items.add(id_item)
                     else:
                         break
-            else: 
+
+        elif opcio==2:
+            with open(fitxer_items, 'r') as f:
+                next(f)
                 for line in f:
-                    id_usuari, id_item, _ , _ = line.strip().split(',')
+                    if len(self._ll_items) < 50000:
+                        line=line.strip().split(',')
+                        id_item = line[0]
+                        self._ll_items.add(id_item)
+                    else:
+                        break
+            
+            with open('llibres/Users.csv') as f:
+                next(f)
+                for line in f:
+                    line=line.strip().split(',')
+                    id_usuari = line[0]
                     self._ll_usuaris.add(id_usuari)
-                    self._ll_items.add(id_item)
+
 
         self._ll_usuaris = list(sorted(self._ll_usuaris))
         self._ll_items = list(sorted(self._ll_items))
         self._n_usuaris, self._n_items = len(self._ll_usuaris), len(self._ll_items)
-        self._mat = np.zeros((self._n_usuaris, self._n_items))
+        self._mat = np.zeros((self._n_usuaris, self._n_items), dtype='float16')
+
 
         with open(fitxer_valoracions, 'r') as f:
             next(f) 
@@ -54,7 +69,8 @@ class Score:
                     if i < 50000:
                         id_usuari, id_item, score = line.strip().split(',')
                         score = float(score)
-                        self._mat[self._ll_usuaris.index(id_usuari), self._ll_items.index(id_item)] = score
+                        if id_usuari in self._ll_usuaris and id_item in self._ll_items:
+                            self._mat[self._ll_usuaris.index(id_usuari), self._ll_items.index(id_item)] = score
                         i += 1
                     else:
                         break
@@ -71,6 +87,10 @@ class Score:
                 ll.append(id_item)
         return ll
     
+    def avg_usu(self, id_usuari) -> float:
+        fila=self._mat[self._ll_usuaris.index(id_usuari),:]
+        sense_zeros = fila[fila > 0]
+        return np.mean(sense_zeros)
     
     def avg_item(self, id_item) -> float:
         """

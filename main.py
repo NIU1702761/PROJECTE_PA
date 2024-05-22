@@ -17,17 +17,19 @@ class Main2():
     def __init__(self):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
-        fitxer_valoracions_prova = 'prova3.csv'
-        #o = 2
+        fitxer_pelis = 'movies/movies.csv'
+        fitxer_llibres = 'llibres/Books.csv'
+        
+        
         o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
         while (o != 1) and (o != 2):
             print('Opció invalida.')
             o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
         print('Carregant conjunt de dades...')
         if o == 1:
-            self._score = Score(fitxer_valoracions_pelis,o)
+            self._score = Score(fitxer_pelis,fitxer_valoracions_pelis,o)
         else:
-            self._score = Score(fitxer_valoracions_llibres,o)
+            self._score = Score(fitxer_llibres,fitxer_valoracions_llibres,o)
         #metode = 1
         print('Fet!')
         self.crida_metode(o)
@@ -48,7 +50,8 @@ class Main2():
             if metode == 1:
                 items = R.recomanacio_simple()
             else:
-                items = R.recomanacio_colaborativa()
+                k=int(input("Nombre d'usuaris a considerar (k):"))
+                items = R.recomanacio_colaborativa(k)
             
             for item in items:
                 if o == 2:
