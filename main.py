@@ -17,10 +17,16 @@ class Main2():
     def __init__(self):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
+<<<<<<< HEAD
         fitxer_pelis = 'movies/movies.csv'
         fitxer_llibres = 'llibres/Books.csv'
         
         
+=======
+        #fitxer_valoracions_prova = 'prova3.csv'
+        fitxer_generes_pelis = 'movies/movies.csv'
+        #o = 2
+>>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
         o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
         while (o != 1) and (o != 2):
             print('Opció invalida.')
@@ -37,11 +43,12 @@ class Main2():
     def crida_metode(self,o):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
+        fitxer_generes_pelis = 'movies/movies.csv'
 
-        metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
-        while (metode != 1) and (metode != 2):
+        metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n    3 - recomanació_basada_en_contingut\n --> '))
+        while (metode != 1) and (metode != 2) and (metode != 3):
             print('Opció invàlida.')
-            metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n --> '))
+            metode = int(input('\nMètode de recomanació:\n    1 - recomanacio_simple\n    2 - recomanació_colaborativa\n    3 - recomanació_basada_en_contingut\n --> '))
         id_user = input("\nIdentificador d'usuari: ")
         #id_user = '276725'
         #276746
@@ -49,9 +56,16 @@ class Main2():
             R = Recomanacio(self._score, id_user)
             if metode == 1:
                 items = R.recomanacio_simple()
+<<<<<<< HEAD
             else:
                 k=int(input("Nombre d'usuaris a considerar (k):"))
                 items = R.recomanacio_colaborativa(k)
+=======
+            elif metode == 2:
+                items = R.recomanacio_colaborativa()
+            else:
+                items = R.recomanacio_basada_en_contingut(fitxer_generes_pelis)
+>>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
             
             for item in items:
                 if o == 2:
@@ -68,7 +82,7 @@ class Main2():
                         print('Película no carregada')
             id_user = input("Identificado d'usuari: ")
 
-    #def recomanacio_colaborativa(self, id_user):
+    
             
         
     
