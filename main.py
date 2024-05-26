@@ -11,6 +11,7 @@ from item import Item, Book, Movie
 from user import User
 import numpy as np
 from recomanacions import Recomanacio
+from avalua import Avalua
 
 class Main2():
 
@@ -53,12 +54,12 @@ class Main2():
         while id_user != '':
             R = Recomanacio(self._score, id_user)
             if metode == 1:
-                items = R.recomanacio_simple()
+                puntuacions, items = R.recomanacio_simple()
             elif metode == 2:
                 k=int(input("Nombre d'usuaris a considerar (k):"))
-                items = R.recomanacio_colaborativa(k)
+                puntuacions, items = R.recomanacio_colaborativa(k)
             else:
-                items = R.recomanacio_basada_en_contingut(fitxer_generes_pelis)
+                puntuacions, items = R.recomanacio_basada_en_contingut(fitxer_generes_pelis)
             
             for item in items:
                 if o == 2:
@@ -73,6 +74,10 @@ class Main2():
                         print('\n'+str(H))
                     else:
                         print('Película no carregada')
+                
+                #A = Avalua(puntuacions, self._score.vector_puntuacions(id_user))
+                #print('MAE: '+str(A.MAE()))
+                #print('RMSE: '+str(A.RMSE()))
             id_user = input("Identificado d'usuari: ")
 
     

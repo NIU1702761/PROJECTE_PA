@@ -16,7 +16,7 @@ class Recomanacio():
             
     def recomanacio_simple(self):
         #num_recomanacions = 1
-        num_recomanacions = int(input("Numero de recomenacions: "))
+        #num_recomanacions = int(input("Numero de recomenacions: "))
         #min_vots = 1
         min_vots = int(input('Minim vots: '))
         items_a_considerar = self._score.min_vots(min_vots)
@@ -32,14 +32,14 @@ class Recomanacio():
         
         items = []
         copia_puntuacions = puntuacions.copy()
-        while len(items) < num_recomanacions:
+        while len(items) < 5:
             maxim = max(copia_puntuacions)
             id_item = items_a_considerar[puntuacions.index(maxim)]
             if self._score.no_vista(self._id_user, id_item):
                 items.append(id_item)
             copia_puntuacions.remove(maxim)
             
-        return items
+        return puntuacions, items
     
     def similitud(self,usuari_client,usuari_secundari):
         numerador=0
@@ -87,10 +87,10 @@ class Recomanacio():
                 puntuacions.append((item, mitjana_usu+puntuacio))
 
         puntuacions.sort(key=lambda x: x[1], reverse=True)
-        j=int(input("Quantes recomenacions vols?: "))
+        #j=int(input("Quantes recomenacions vols?: "))
         i=0
-        for i in range(j):
-            return puntuacions[i][0]
+        for i in range(5):
+            return puntuacions, puntuacions[i][0]
             
 
     def recomanacio_basada_en_contingut(self, fitxer_generes_pelis):
@@ -135,9 +135,7 @@ class Recomanacio():
             if self._score.no_vista(self._id_user, id_item):
                 items.append(id_item)
             copia_puntuacions = np.delete(copia_puntuacions, np.where(copia_puntuacions == maxim)[0][0])
-            #copia_puntuacions.remove(maxim)
-            
-        return items
+        return p_final, items
         
         
         
