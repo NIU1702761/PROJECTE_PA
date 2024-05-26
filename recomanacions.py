@@ -2,15 +2,12 @@ from score import Score
 from item import Item, Book, Movie
 from user import User
 import numpy as np
-<<<<<<< HEAD
 from math import sqrt
 
-=======
+
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 import csv
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
-
 class Recomanacio():
 
     def __init__(self, score, id_user):
@@ -44,7 +41,6 @@ class Recomanacio():
             
         return items
     
-<<<<<<< HEAD
     def similitud(self,usuari_client,usuari_secundari):
         numerador=0
         denominador1=0
@@ -97,25 +93,6 @@ class Recomanacio():
             return puntuacions[i][0]
             
 
-        
-
-
-
-
-
-        
-        
-
-
-
-        
-    
-
-        
-=======
-    #def recomanacio_colaborativa(self):
-        #return items=[]
-    
     def recomanacio_basada_en_contingut(self, fitxer_generes_pelis):
         item_features = []
         with open(fitxer_generes_pelis, 'r') as f:
@@ -123,46 +100,45 @@ class Recomanacio():
             reader = csv.reader(f)
             for line in reader:
                 generes = line[-1]
+                #if generes != '(no genres listed)':
                 item_features.append(generes)
         
         tfidf = TfidfVectorizer(stop_words='english')
         tfidf_matrix = tfidf.fit_transform(item_features).toarray()
+        #print (" Vocabulary : {}".format(tfidf.get_feature_names_out())) 
+        #print (" Shape : {}".format(tfidf_matrix.shape))
         
-        print (" Vocabulary : {}".format(tfidf.get_feature_names_out())) 
-        print (" Shape : {}".format(tfidf_matrix.shape))
         
         vector_puntuacions = self._score.vector_puntuacions(self._id_user)
-        print("Shape vector_puntuacions: {}".format(vector_puntuacions.shape))
-        
-        #vector_puntuacions_flat = np.ravel(vector_puntuacions)
-        #mat_numerador = np.repeat(vector_puntuacions, 2, axis = 1) * tfidf_matrix
-
-        #mat_numerador = np.outer(vector_puntuacions, tfidf_matrix)
-        mat_numerador = vector_puntuacions * tfidf_matrix 
-        print (" Shape mat_mumerador: {}".format(mat_numerador.shape))
+        #print("Shape vector_puntuacions: {}".format(vector_puntuacions.shape))
+        mat_numerador = np.copy(tfidf_matrix)
+        for i in range(len(vector_puntuacions)):
+            mat_numerador[i,:] = mat_numerador[i,:]*vector_puntuacions[i]
+        #print (" Shape mat_mumerador: {}".format(mat_numerador.shape))
         perfil_user = np.sum(mat_numerador, axis=0)
+        #print("Shape perfil_user: {}".format(perfil_user.shape))
         valor_normalitzador = np.sum(vector_puntuacions)
-        
         Q = perfil_user / valor_normalitzador
-        print (" Shape Q: {}".format(Q.shape))
+        #print (" Shape Q: {}".format(Q.shape))
+        
+        S = np.dot(tfidf_matrix, Q)
+        #print (" Shape S: {}".format(S.shape))
+        
+        p_final = S*self._score.max()
+        
+        items = []
+        copia_puntuacions = p_final.copy()
+        while len(items) < 5:
+            maxim = max(copia_puntuacions)
+            index_item = np.where(copia_puntuacions==maxim)[0][0]
+            id_item = self._score._ll_items[index_item]  # això és per recuperar l'id de l'item cosa que no sé si ho estic trobant bé...
+            if self._score.no_vista(self._id_user, id_item):
+                items.append(id_item)
+            copia_puntuacions = np.delete(copia_puntuacions, np.where(copia_puntuacions == maxim)[0][0])
+            #copia_puntuacions.remove(maxim)
+            
+        return items
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860

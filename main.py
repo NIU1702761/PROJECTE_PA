@@ -17,16 +17,14 @@ class Main2():
     def __init__(self):
         fitxer_valoracions_pelis = 'movies/ratings.csv'
         fitxer_valoracions_llibres = 'llibres/Ratings.csv'
-<<<<<<< HEAD
         fitxer_pelis = 'movies/movies.csv'
         fitxer_llibres = 'llibres/Books.csv'
         
         
-=======
+
         #fitxer_valoracions_prova = 'prova3.csv'
         fitxer_generes_pelis = 'movies/movies.csv'
         #o = 2
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
         o = int(input('\nConjunt de dades:\n    1 - pelicules\n    2 - llibres\n --> '))
         while (o != 1) and (o != 2):
             print('Opció invalida.')
@@ -56,16 +54,11 @@ class Main2():
             R = Recomanacio(self._score, id_user)
             if metode == 1:
                 items = R.recomanacio_simple()
-<<<<<<< HEAD
-            else:
+            elif metode == 2:
                 k=int(input("Nombre d'usuaris a considerar (k):"))
                 items = R.recomanacio_colaborativa(k)
-=======
-            elif metode == 2:
-                items = R.recomanacio_colaborativa()
             else:
                 items = R.recomanacio_basada_en_contingut(fitxer_generes_pelis)
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
             
             for item in items:
                 if o == 2:
