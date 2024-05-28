@@ -2,14 +2,10 @@ from score import Score
 from item import Item, Book, Movie
 from user import User
 import numpy as np
-<<<<<<< HEAD
 from math import sqrt
-
-=======
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 import csv
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
+
 
 class Recomanacio():
 
@@ -44,75 +40,6 @@ class Recomanacio():
             
         return items
     
-<<<<<<< HEAD
-    def similitud(self,usuari_client,usuari_secundari):
-        numerador=0
-        denominador1=0
-        denominador2=0
-        index_usu_client=self._score._ll_usuaris.index(usuari_client) #Trobar índex d'usuari a la matriu
-        index_usu_sec=self._score._ll_usuaris.index(usuari_secundari)
-        num_rows, _ = self._score._mat.shape
-        for j in range(num_rows):
-            v_usuari_client=self._score._mat[index_usu_client][j]
-            v_usuari_secundari=self._score._mat[index_usu_sec][j]
-            if v_usuari_client!=0 and v_usuari_secundari!=0:
-                numerador+=v_usuari_client*v_usuari_secundari
-                denominador1+=(v_usuari_secundari)**2
-                denominador2+=(v_usuari_client)**2
-        
-        if numerador!=0 and denominador1!=0 and denominador2!=0:
-            return numerador/(sqrt(denominador1)*sqrt(denominador2))
-        else:
-            return 0
-
-
-    def recomanacio_colaborativa(self,k):
-        similituds=[]
-        for usuari in self._score._ll_usuaris:
-            s=self.similitud(self._id_user,usuari)
-            similituds.append((usuari,s))
-        
-        similituds.sort(key=lambda x: x[1], reverse=True)
-        k_similituds = similituds[:k+2][1:]
-        usuaris_similars = [x[0] for x in k_similituds]
-        
-        puntuacions=[]
-        mitjana_usu=self._score.avg_usu(self._id_user)
-        for item in self._score._ll_items:
-            numerador=0
-            denominador=0
-            if self._score.no_vista(self._id_user, item):
-                for usuari in usuaris_similars:
-                    i=usuaris_similars.index(usuari)
-                    mitjana=self._score.avg_usu(usuari)
-                    numerador+=k_similituds[i][1]*(self._score._mat[self._score._ll_usuaris.index(usuari)][self._score._ll_items.index(item)]-mitjana)
-                    denominador+=k_similituds[i][1]
-                puntuacio=numerador/denominador
-                puntuacions.append((item, mitjana_usu+puntuacio))
-
-        puntuacions.sort(key=lambda x: x[1], reverse=True)
-        j=int(input("Quantes recomenacions vols?: "))
-        i=0
-        for i in range(j):
-            return puntuacions[i][0]
-            
-
-        
-
-
-
-
-
-        
-        
-
-
-
-        
-    
-
-        
-=======
     #def recomanacio_colaborativa(self):
         #return items=[]
     
@@ -165,4 +92,3 @@ class Recomanacio():
         
         
         
->>>>>>> 7cd667883e3ef965ea8d311546429485a0fcc860
