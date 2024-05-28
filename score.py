@@ -126,6 +126,9 @@ class Score:
     def vector_puntuacions(self, id_user):
         return self._mat[self._ll_usuaris.index(id_user),:]
     
+    def max(self):
+        return self._mat.max()
+    
     
     
     #def mat_rec_simple(self):
